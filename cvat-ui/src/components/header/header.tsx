@@ -18,7 +18,7 @@ import Text from 'antd/lib/typography/Text';
 import getCore from 'cvat-core-wrapper';
 import consts from 'consts';
 
-import { CVATLogo, AccountIcon } from 'icons';
+import { CVATLogo, AccountIcon, TrashBinIcon } from 'icons';
 import ChangePasswordDialog from 'components/change-password-modal/change-password-modal';
 import { switchSettingsDialog as switchSettingsDialogAction } from 'actions/settings-actions';
 import { logoutAsync, authActions } from 'actions/auth-actions';
@@ -333,6 +333,20 @@ function HeaderContainer(props: Props): JSX.Element {
                 >
                     <Icon type='question-circle' />
                     Help
+                </Button>
+                <Button
+                    className='cvat-header-button'
+                    type='link'
+                    href={GITHUB_URL}
+                    onClick={(event: React.MouseEvent): void => {
+                        event.preventDefault();
+                        // false positive
+                        // eslint-disable-next-line security/detect-non-literal-fs-filename
+                        window.open(GITHUB_URL, '_blank');
+                    }}
+                >
+                    <Icon className='cvat-header-trash-bin-icon' component={TrashBinIcon} />
+                    <Text className='cvat-text-color'>Trash Bin</Text>
                 </Button>
                 <Dropdown overlay={menu} className='cvat-header-menu-dropdown'>
                     <span>
