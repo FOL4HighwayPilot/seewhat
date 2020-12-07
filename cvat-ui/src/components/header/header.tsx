@@ -307,19 +307,7 @@ function HeaderContainer(props: Props): JSX.Element {
                 >
                     <Icon type='github' />
                     <Text className='cvat-text-color'>GitHub</Text>
-                </Button>
-                <Button
-                    className='cvat-header-button'
-                    type='link'
-                    href={GITHUB_URL}
-                    onClick={(event: React.MouseEvent): void => {
-                        event.preventDefault();
-                        window.open(GITHUB_URL, '_blank');
-                    }}
-                >
-                    <Icon type='github' />
-                    <Text className='cvat-text-color'>GitHub2</Text>
-                </Button>
+                </Button>               
                 <Button
                     className='cvat-header-button'
                     type='link'
