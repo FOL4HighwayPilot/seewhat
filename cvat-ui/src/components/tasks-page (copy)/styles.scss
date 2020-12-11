@@ -37,17 +37,17 @@
     }
 }
 
-/* empty-trash-bin icon */
-.cvat-empty-trash-bin-list {
+/* empty-tasks icon */
+.cvat-empty-tasks-list {
     > div:nth-child(1) {
-        margin-top: $grid-unit-size * 6;
+        margin-top: 50px;
     }
 
     > div:nth-child(2) {
         > div {
-            margin-top: $grid-unit-size * 3;
+            margin-top: 20px;
 
-            /* No task deleted yet */
+            /* No tasks created yet */
             > span {
                 font-size: 20px;
                 color: $text-color;
@@ -55,9 +55,9 @@
         }
     }
 
-    /* Go to task page or go to project page */
+    /* To get started with your annotation project .. */
     > div:nth-child(3) {
-        margin-top: $grid-unit-size;
+        margin-top: 10px;
     }
 }
 
@@ -141,20 +141,13 @@
 
 .cvat-item-open-task-actions {
     margin-right: 5px;
-    margin-top: 10px ;
+    margin-top: 10px;
     display: flex;
     align-items: center;
 }
 
-.cvat-item-delete-task-button {
+.cvat-item-open-task-button {
     margin-right: 20px;
-    padding: 0 23px;   
-}
-
-.cvat-item-restore-task-button {
-    margin-right: 20px;
-    margin-top: 10px ;
-    padding: 0 20px;  
 }
 
 .cvat-item-task-name {

@@ -12,13 +12,11 @@ import Icon from 'antd/lib/icon';
 import Dropdown from 'antd/lib/dropdown';
 import Progress from 'antd/lib/progress';
 import moment from 'moment';
-import Modal from 'antd/lib/modal';
 
 import ActionsMenuContainer from 'containers/actions-menu/actions-menu';
 import { ActiveInference } from 'reducers/interfaces';
 import { MenuIcon } from 'icons';
 import AutomaticAnnotationProgress from './automatic-annotation-progress';
-import { deleteTaskAsync } from 'actions/tasks-actions';
 
 export interface TaskItemProps {
     taskInstance: any;
@@ -29,28 +27,7 @@ export interface TaskItemProps {
     cancelAutoAnnotation(): void;
 }
 
-interface DispatchToProps { 
-    deleteTask: (taskInstance: any) => void;   
-}
-
-function mapDispatchToProps(dispatch: any): DispatchToProps {
-    return {       
-        deleteTask: (taskInstance: any): void => {
-            dispatch(deleteTaskAsync(taskInstance));
-        },       
-    };
-}
-
-class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteComponentProps & DispatchToProps> {
-       
-    private mapDispatchToProps(dispatch: any): DispatchToProps {
-        return {       
-            deleteTask: (taskInstance: any): void => {
-                dispatch(deleteTaskAsync(taskInstance));
-            },       
-        };
-    }
-
+class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteComponentProps> {
     private renderPreview(): JSX.Element {
         const { previewImage } = this.props;
         return (
@@ -69,7 +46,6 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
         const owner = taskInstance.owner ? taskInstance.owner.username : null;
         const updated = moment(taskInstance.updatedDate).fromNow();
         const created = moment(taskInstance.createdDate).format('MMMM Do YYYY');
-        const deleted = moment(taskInstance.updatedDate).fromNow();
 
         // Get and truncate a task name
         const name = `${taskInstance.name.substring(0, 70)}${taskInstance.name.length > 70 ? '...' : ''}`;
@@ -88,8 +64,6 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
                     </>
                 )}
                 <Text type='secondary'>{`Last updated ${updated}`}</Text>
-                <br />
-                <Text type='secondary'>{`Deleted ${deleted}`}</Text>
             </Col>
         );
     }
@@ -156,13 +130,13 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
                 <AutomaticAnnotationProgress
                     activeInference={activeInference}
                     cancelAutoAnnotation={cancelAutoAnnotation}
-                />                
+                />
             </Col>
         );
     }
 
     private renderNavigation(): JSX.Element {
-        const { taskInstance, history, deleteTask} = this.props;
+        const { taskInstance, history } = this.props;
         const { id } = taskInstance;
 
         return (
@@ -170,48 +144,20 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
                 <Row type='flex' justify='end'>
                     <Col>
                         <Button
-                            className='cvat-item-delete-task-button'
-                            type='danger'
-                            size='default'                            
-                            href={`/tasks/${id}`}
-                            onClick={(e: React.MouseEvent): void => {
-                                e.preventDefault();
-                                Modal.confirm({
-                                    title: `The task ${id} will be deleted`,
-                                    content: 'All related data (images, annotations) will be lost. Continue?',
-                                    onOk: () => {
-                                        //onClickMenu(copyParams);
-                                        //this.mapDispatchToProps(deleteTaskAsync(taskInstance));
-                                        deleteTask(taskInstance);
-                                    },
-                                    okButtonProps: {
-                                        type: 'danger',
-                                    },
-                                    okText: 'Delete',
-                                });                                
-                            }}
-                        >
-                            Delete
-                        </Button>
-                    </Col>         
-                </Row>
-                <Row type='flex' justify='end'>
-                    <Col>
-                        <Button
-                            className='cvat-item-restore-task-button'
+                            className='cvat-item-open-task-button'
                             type='primary'
-                            size='default'
+                            size='large'
                             ghost
                             href={`/tasks/${id}`}
                             onClick={(e: React.MouseEvent): void => {
-                                e.preventDefault();                                
+                                e.preventDefault();
                                 history.push(`/tasks/${id}`);
                             }}
                         >
-                            Restore
+                            Open
                         </Button>
-                    </Col>         
-                </Row>   
+                    </Col>
+                </Row>
                 <Row type='flex' justify='end'>
                     <Col className='cvat-item-open-task-actions'>
                         <Text className='cvat-text-color'>Actions</Text>
@@ -219,7 +165,7 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
                             <Icon className='cvat-menu-icon' component={MenuIcon} />
                         </Dropdown>
                     </Col>
-                </Row>             
+                </Row>
             </Col>
         );
     }

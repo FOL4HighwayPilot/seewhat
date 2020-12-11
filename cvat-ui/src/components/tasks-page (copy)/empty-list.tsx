@@ -12,22 +12,27 @@ import { EmptyTasksIcon } from 'icons';
 
 export default function EmptyListComponent(): JSX.Element {
     return (
-        <div className='cvat-empty-trash-bin-list'>
+        <div className='cvat-empty-tasks-list'>
             <Row type='flex' justify='center' align='middle'>
                 <Col>
-                    <Icon className='cvat-empty-trash-bin-icon' component={EmptyTasksIcon} />
+                    <Icon className='cvat-empty-tasks-icon' component={EmptyTasksIcon} />
                 </Col>
             </Row>
             <Row type='flex' justify='center' align='middle'>
                 <Col>
-                    <Text strong>No tasks deleted yet ...</Text>
+                    <Text strong>No tasks created yet ...</Text>
                 </Col>
-            </Row>           
+            </Row>
             <Row type='flex' justify='center' align='middle'>
                 <Col>
-                    <Link to='/tasks'>go to task list</Link>
-                    <Text type='secondary'> or </Text>
-                    <Link to='/projects'>go to project list</Link>
+                    <Text type='secondary'>To get started with your annotation project</Text>
+                </Col>
+            </Row>
+            <Row type='flex' justify='center' align='middle'>
+                <Col>
+                    <Link to='/tasks/create'>create a new task</Link>
+                    <Text type='secondary'> or try to </Text>
+                    <Link to='/projects/create'>create a new project</Link>
                 </Col>
             </Row>
         </div>
