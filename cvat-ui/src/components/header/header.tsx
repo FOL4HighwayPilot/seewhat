@@ -325,12 +325,11 @@ function HeaderContainer(props: Props): JSX.Element {
                 <Button
                     className='cvat-header-button'
                     type='link'
-                    href={GITHUB_URL}
+                    value='trashbin'
+                    href='/trashbin'
                     onClick={(event: React.MouseEvent): void => {
                         event.preventDefault();
-                        // false positive
-                        // eslint-disable-next-line security/detect-non-literal-fs-filename
-                        window.open(GITHUB_URL, '_blank');
+                        history.push('/trashbin');
                     }}
                 >
                     <Icon className='cvat-header-trash-bin-icon' component={TrashBinIcon} />

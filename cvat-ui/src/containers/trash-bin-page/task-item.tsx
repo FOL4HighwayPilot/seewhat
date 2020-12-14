@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 
 import { TasksQuery, CombinedState, ActiveInference } from 'reducers/interfaces';
 
-import TaskItemComponent from 'components/tasks-page/task-item';
+import TaskItemComponent from 'components/trash-bin-page/task-item';
 
-import { getTasksAsync } from 'actions/tasks-actions';
+import { getTasksAsync, deleteTaskAsync } from 'actions/tasks-actions';
 import { cancelInferenceAsync } from 'actions/models-actions';
 
 interface StateToProps {
@@ -22,11 +22,13 @@ interface StateToProps {
 interface DispatchToProps {
     getTasks(query: TasksQuery): void;
     cancelAutoAnnotation(): void;
+    deleteTask: (taskInstance: any) => void;
 }
 
 interface OwnProps {
     idx: number;
     taskID: number;
+    taskInstance: any;
 }
 
 function mapStateToProps(state: CombinedState, own: OwnProps): StateToProps {
@@ -50,6 +52,9 @@ function mapDispatchToProps(dispatch: any, own: OwnProps): DispatchToProps {
         },
         cancelAutoAnnotation(): void {
             dispatch(cancelInferenceAsync(own.taskID));
+        },
+        deleteTask: (taskInstance: any): void => {
+            dispatch(deleteTaskAsync(taskInstance));
         },
     };
 }

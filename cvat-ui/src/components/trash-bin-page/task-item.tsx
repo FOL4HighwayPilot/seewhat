@@ -8,22 +8,16 @@ import { withRouter } from 'react-router-dom';
 import Text from 'antd/lib/typography/Text';
 import { Row, Col } from 'antd/lib/grid';
 import Button from 'antd/lib/button';
-import Icon from 'antd/lib/icon';
-import Dropdown from 'antd/lib/dropdown';
 import Progress from 'antd/lib/progress';
 import moment from 'moment';
-
-import ActionsMenuContainer from 'containers/actions-menu/actions-menu';
-import { ActiveInference } from 'reducers/interfaces';
-import { MenuIcon } from 'icons';
-import AutomaticAnnotationProgress from './automatic-annotation-progress';
+import Modal from 'antd/lib/modal';
 
 export interface TaskItemProps {
     taskInstance: any;
     previewImage: string;
     deleted: boolean;
-    hidden: boolean;
-    activeInference: ActiveInference | null;
+    hidden: boolean;    
+    deleteTask: (taskInstance: any) => void;
 }
 
 class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteComponentProps> {
@@ -71,7 +65,7 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
     }
 
     private renderProgress(): JSX.Element {
-        const { taskInstance, activeInference } = this.props;
+        const { taskInstance } = this.props;
         // Count number of jobs and performed jobs
         const numOfJobs = taskInstance.jobs.length;
         const numOfCompleted = taskInstance.jobs.filter((job: any): boolean => job.status === 'completed').length;
@@ -128,44 +122,61 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
                             size='small'
                         />
                     </Col>
-                </Row>
-                
+                </Row>                
             </Col>
         );
     }
 
     private renderNavigation(): JSX.Element {
-        const { taskInstance, history } = this.props;
-        const { id } = taskInstance;
+        const { taskInstance, history, deleteTask } = this.props;
+        const { id } = taskInstance;        
 
         return (
             <Col span={4}>
                 <Row type='flex' justify='end'>
                     <Col>
-                        <Button
-                            className='cvat-item-open-task-button'
-                            type='primary'
-                            size='large'
-                            ghost
-                            href={`/tasks/${id}`}
+                    <Button
+                            className='cvat-item-delete-task-button'
+                            type='danger'
+                            size='default'                        
+                            
                             onClick={(e: React.MouseEvent): void => {
-                                e.preventDefault();
-                                history.push(`/tasks/${id}`);
+                                
+                                Modal.confirm({
+                                    title: `The task ${id} will be deleted`,
+                                    content: 'All related data (images, annotations) will be lost. Continue?',
+                                    onOk: () => {   
+                                        deleteTask(taskInstance);                                        
+                                    },
+                                    okButtonProps: {
+                                        type: 'danger',
+                                    },
+                                    okText: 'Delete',
+                                    });
                             }}
                         >
-                            Open
+                            Delete
                         </Button>
                     </Col>
                 </Row>
                 <Row type='flex' justify='end'>
-                    <Col className='cvat-item-open-task-actions'>
-                        <Text className='cvat-text-color'>Actions</Text>
-                        <Dropdown overlay={<ActionsMenuContainer taskInstance={taskInstance} />}>
-                            <Icon className='cvat-menu-icon' component={MenuIcon} />
-                        </Dropdown>
-                    </Col>
-                </Row>
-            </Col>
+                    <Col>
+                        <Button
+                            className='cvat-item-restore-task-button'
+                            type='primary'
+                            size='default'
+                            ghost
+                            href={`/tasks/${id}`}
+                            onClick={(e: React.MouseEvent): void => {
+                                e.preventDefault();                                
+                                history.push(`/tasks/${id}`);
+                            }}
+                        >
+                            Restore
+                        </Button>
+                    </Col>         
+                </Row> 
+           </Col>
         );
     }
 

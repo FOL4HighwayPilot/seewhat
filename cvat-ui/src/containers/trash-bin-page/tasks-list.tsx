@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import { TasksState, TasksQuery, CombinedState } from 'reducers/interfaces';
 
-import TasksListComponent from 'components/tasks-page/task-list';
+import TasksListComponent from 'components/trash-bin-page/task-list';
 
 import { getTasksAsync } from 'actions/tasks-actions';
 

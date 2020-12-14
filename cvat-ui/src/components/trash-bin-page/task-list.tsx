@@ -7,7 +7,7 @@ import { Row, Col } from 'antd/lib/grid';
 import Pagination from 'antd/lib/pagination';
 
 import ModelRunnerModal from 'components/model-runner-modal/model-runner-dialog';
-import TaskItem from 'containers/tasks-page/task-item';
+import TaskItem from 'containers/trash-bin-page/task-item';
 
 export interface ContentListProps {
     onSwitchPage(page: number): void;
