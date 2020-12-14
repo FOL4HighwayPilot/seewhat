@@ -13,12 +13,14 @@ import Dropdown from 'antd/lib/dropdown';
 import Progress from 'antd/lib/progress';
 import moment from 'moment';
 import Modal from 'antd/lib/modal';
+import { useDispatch } from 'react-redux';
 
 import ActionsMenuContainer from 'containers/actions-menu/actions-menu';
 import { ActiveInference } from 'reducers/interfaces';
 import { MenuIcon } from 'icons';
 import AutomaticAnnotationProgress from './automatic-annotation-progress';
 import { deleteTaskAsync } from 'actions/tasks-actions';
+
 
 export interface TaskItemProps {
     taskInstance: any;
@@ -29,29 +31,9 @@ export interface TaskItemProps {
     cancelAutoAnnotation(): void;
 }
 
-interface DispatchToProps { 
-    deleteTask: (taskInstance: any) => void;   
-}
-
-function mapDispatchToProps(dispatch: any): DispatchToProps {
-    return {       
-        deleteTask: (taskInstance: any): void => {
-            dispatch(deleteTaskAsync(taskInstance));
-        },       
-    };
-}
-
 class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteComponentProps & DispatchToProps> {
        
-    private mapDispatchToProps(dispatch: any): DispatchToProps {
-        return {       
-            deleteTask: (taskInstance: any): void => {
-                dispatch(deleteTaskAsync(taskInstance));
-            },       
-        };
-    }
-
-    private renderPreview(): JSX.Element {
+        private renderPreview(): JSX.Element {
         const { previewImage } = this.props;
         return (
             <Col span={4}>
@@ -164,6 +146,7 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
     private renderNavigation(): JSX.Element {
         const { taskInstance, history, deleteTask} = this.props;
         const { id } = taskInstance;
+        const dispatch = useDispatch();
 
         return (
             <Col span={4}>
@@ -182,7 +165,7 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
                                     onOk: () => {
                                         //onClickMenu(copyParams);
                                         //this.mapDispatchToProps(deleteTaskAsync(taskInstance));
-                                        deleteTask(taskInstance);
+                                        dispatch(deleteTaskAsync(taskInstance));
                                     },
                                     okButtonProps: {
                                         type: 'danger',
@@ -212,6 +195,7 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
                         </Button>
                     </Col>         
                 </Row>   
+                {/* 
                 <Row type='flex' justify='end'>
                     <Col className='cvat-item-open-task-actions'>
                         <Text className='cvat-text-color'>Actions</Text>
@@ -219,7 +203,8 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
                             <Icon className='cvat-menu-icon' component={MenuIcon} />
                         </Dropdown>
                     </Col>
-                </Row>             
+                </Row>    
+                */}      
             </Col>
         );
     }
