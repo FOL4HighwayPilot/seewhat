@@ -202,7 +202,7 @@ class Task(models.Model):
     status = models.CharField(max_length=32, choices=StatusChoice.choices(),
         default=StatusChoice.ANNOTATION)
     data = models.ForeignKey(Data, on_delete=models.CASCADE, null=True, related_name="tasks")
-
+    is_deleted = models.BooleanField(default=False)
     # Extend default permission model
     class Meta:
         default_permissions = ()
