@@ -203,6 +203,7 @@ class Task(models.Model):
         default=StatusChoice.ANNOTATION)
     data = models.ForeignKey(Data, on_delete=models.CASCADE, null=True, related_name="tasks")
     is_deleted = models.BooleanField(default=False)
+    deleted_date = models.DateTimeField(null=True, blank=True)
     # Extend default permission model
     class Meta:
         default_permissions = ()
