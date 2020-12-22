@@ -367,12 +367,16 @@ class TaskViewSet(auth.TaskGetQuerySetMixin, viewsets.ModelViewSet):
             serializer.save(owner=self.request.user)
 
     def perform_destroy(self, instance):
-        task_dirname = instance.get_task_dirname()
-        super().perform_destroy(instance)
-        shutil.rmtree(task_dirname, ignore_errors=True)
-        if instance.data and not instance.data.tasks.all():
-            shutil.rmtree(instance.data.get_data_dirname(), ignore_errors=True)
-            instance.data.delete()
+        db_task = self.get_object()
+        db_task.is_deleted = True
+        db_task.deleted_date = datetime.now()
+        db_task.save(update_fields=['is_deleted', 'deleted_date'])
+        #task_dirname = instance.get_task_dirname()
+        #super().perform_destroy(instance)
+        #shutil.rmtree(task_dirname, ignore_errors=True)
+        #if instance.data and not instance.data.tasks.all():
+        #    shutil.rmtree(instance.data.get_data_dirname(), ignore_errors=True)
+        #    instance.data.delete()
 
     @swagger_auto_schema(method='get', operation_summary='Returns a list of jobs for a specific task',
         responses={'200': JobSerializer(many=True)})
