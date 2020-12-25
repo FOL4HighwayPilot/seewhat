@@ -307,7 +307,7 @@ function HeaderContainer(props: Props): JSX.Element {
                 >
                     <Icon type='github' />
                     <Text className='cvat-text-color'>GitHub</Text>
-                </Button>
+                </Button>               
                 <Button
                     className='cvat-header-button'
                     type='link'
