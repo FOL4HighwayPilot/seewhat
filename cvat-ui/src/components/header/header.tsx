@@ -311,20 +311,6 @@ function HeaderContainer(props: Props): JSX.Element {
                 <Button
                     className='cvat-header-button'
                     type='link'
-                    href={`${tool.server.host}/documentation/user_guide.html`}
-                    onClick={(event: React.MouseEvent): void => {
-                        event.preventDefault();
-                        // false positive
-                        // eslint-disable-next-line
-                        window.open(`${tool.server.host}/documentation/user_guide.html`, '_blank');
-                    }}
-                >
-                    <Icon type='question-circle' />
-                    Help
-                </Button>
-                <Button
-                    className='cvat-header-button'
-                    type='link'
                     value='trashbin'
                     href='/trashbin'
                     onClick={(event: React.MouseEvent): void => {
