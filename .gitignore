@@ -20,7 +20,7 @@ __pycache__
 *.pyc
 ._*
 .coverage
-.vscode/
+
 # Ignore development npm files
 node_modules
 
