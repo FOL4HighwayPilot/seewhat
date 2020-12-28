@@ -16,7 +16,7 @@ export interface TaskItemProps {
     taskInstance: any;
     previewImage: string;
     deleted: boolean;
-    hidden: boolean;    
+    hidden: boolean;
     deleteTask: (taskInstance: any) => void;
 }
 
@@ -39,7 +39,7 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
         const owner = taskInstance.owner ? taskInstance.owner.username : null;
         const updated = moment(taskInstance.updatedDate).fromNow();
         const created = moment(taskInstance.createdDate).format('MMMM Do YYYY');
-        const deleted = moment(taskInstance.updatedDate).fromNow();
+        const deleted = moment(taskInstance.deletedDate).fromNow();
 
         // Get and truncate a task name
         const name = `${taskInstance.name.substring(0, 70)}${taskInstance.name.length > 70 ? '...' : ''}`;
@@ -122,14 +122,14 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
                             size='small'
                         />
                     </Col>
-                </Row>                
+                </Row>
             </Col>
         );
     }
 
     private renderNavigation(): JSX.Element {
         const { taskInstance, history, deleteTask } = this.props;
-        const { id } = taskInstance;        
+        const { id } = taskInstance;
 
         return (
             <Col span={4}>
@@ -138,15 +138,15 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
                     <Button
                             className='cvat-item-delete-task-button'
                             type='danger'
-                            size='default'                        
-                            
+                            size='default'
+
                             onClick={(e: React.MouseEvent): void => {
-                                
+
                                 Modal.confirm({
                                     title: `The task ${id} will be deleted`,
                                     content: 'All related data (images, annotations) will be lost. Continue?',
-                                    onOk: () => {   
-                                        deleteTask(taskInstance);                                        
+                                    onOk: () => {
+                                        deleteTask(taskInstance);
                                     },
                                     okButtonProps: {
                                         type: 'danger',
@@ -168,14 +168,14 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
                             ghost
                             href={`/tasks/${id}`}
                             onClick={(e: React.MouseEvent): void => {
-                                e.preventDefault();                                
+                                e.preventDefault();
                                 history.push(`/tasks/${id}`);
                             }}
                         >
                             Restore
                         </Button>
-                    </Col>         
-                </Row> 
+                    </Col>
+                </Row>
            </Col>
         );
     }

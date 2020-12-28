@@ -1137,6 +1137,16 @@
                         get: () => data.created_date,
                     },
                     /**
+                     * @name deletedDate
+                     * @type {string}
+                     * @memberof module:API.cvat.classes.Task
+                     * @readonly
+                     * @instance
+                     */
+                    deletedDate: {
+                        get: () => data.deleted_date,
+                    },
+                    /**
                      * @name updatedDate
                      * @type {string}
                      * @memberof module:API.cvat.classes.Task
