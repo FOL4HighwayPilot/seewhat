@@ -301,6 +301,11 @@ class JobAnnotation:
         db_task.updated_date = timezone.now()
         db_task.save()
 
+    def _set_deleted_date(self):
+        db_task = self.db_job.segment.task
+        db_task.deleted_date = timezone.now()
+        db_task.save()
+
     def _save_to_db(self, data):
         self.reset()
         self._save_tags_to_db(data["tags"])
@@ -361,6 +366,7 @@ class JobAnnotation:
 
     def delete(self, data=None):
         self._delete(data)
+        self._set_deleted_date()
         self._commit()
 
     @staticmethod
