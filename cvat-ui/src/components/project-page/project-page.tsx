@@ -88,6 +88,7 @@ export default function ProjectPageComponent(): JSX.Element {
                 </Row>
                 {tasks
                     .filter((task) => task.instance.projectId === project.id)
+                    .filter((task) => task.instance.isDeleted === false)
                     .map((task: Task) => (
                         <TaskItem
                             key={task.instance.id}

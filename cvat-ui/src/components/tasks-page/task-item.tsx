@@ -23,6 +23,7 @@ export interface TaskItemProps {
     previewImage: string;
     deleted: boolean;
     hidden: boolean;
+    isDeleted: boolean;
     activeInference: ActiveInference | null;
     cancelAutoAnnotation(): void;
 }
@@ -171,7 +172,7 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
     }
 
     public render(): JSX.Element {
-        const { deleted, hidden } = this.props;
+        const { deleted, hidden, isDeleted } = this.props;
         const style = {};
         if (deleted) {
             (style as any).pointerEvents = 'none';
@@ -179,6 +180,10 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
         }
 
         if (hidden) {
+            (style as any).display = 'none';
+        }
+
+        if (isDeleted) {
             (style as any).display = 'none';
         }
 

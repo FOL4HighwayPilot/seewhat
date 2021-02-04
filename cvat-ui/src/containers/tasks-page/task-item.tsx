@@ -17,6 +17,7 @@ interface StateToProps {
     previewImage: string;
     taskInstance: any;
     activeInference: ActiveInference | null;
+    isDeleted: boolean;
 }
 
 interface DispatchToProps {
@@ -40,6 +41,7 @@ function mapStateToProps(state: CombinedState, own: OwnProps): StateToProps {
         previewImage: task.preview,
         taskInstance: task.instance,
         activeInference: state.models.inferences[id] || null,
+        isDeleted: task.instance.isDeleted,
     };
 }
 

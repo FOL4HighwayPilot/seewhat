@@ -327,7 +327,7 @@ class TaskViewSet(auth.TaskGetQuerySetMixin, viewsets.ModelViewSet):
     queryset = Task.objects.all().prefetch_related(
             "label_set__attributespec_set",
             "segment_set__job_set",
-        ).order_by('-id')
+        ).filter(is_deleted=False).order_by('-id')
     serializer_class = TaskSerializer
     search_fields = ("name", "owner__username", "mode", "status")
     filterset_class = TaskFilter
@@ -371,12 +371,6 @@ class TaskViewSet(auth.TaskGetQuerySetMixin, viewsets.ModelViewSet):
         db_task.is_deleted = True
         db_task.deleted_date = datetime.now()
         db_task.save(update_fields=['is_deleted', 'deleted_date'])
-        #task_dirname = instance.get_task_dirname()
-        #super().perform_destroy(instance)
-        #shutil.rmtree(task_dirname, ignore_errors=True)
-        #if instance.data and not instance.data.tasks.all():
-        #    shutil.rmtree(instance.data.get_data_dirname(), ignore_errors=True)
-        #    instance.data.delete()
 
     @swagger_auto_schema(method='get', operation_summary='Returns a list of jobs for a specific task',
         responses={'200': JobSerializer(many=True)})

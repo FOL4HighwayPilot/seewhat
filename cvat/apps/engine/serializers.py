@@ -329,12 +329,13 @@ class TaskSerializer(WriteOnceMixin, serializers.ModelSerializer):
     assignee = BasicUserSerializer(allow_null=True, required=False)
     assignee_id = serializers.IntegerField(write_only=True, allow_null=True, required=False)
     project_id = serializers.IntegerField(required=False)
+    is_deleted = serializers.BooleanField(default=False)
 
     class Meta:
         model = models.Task
         fields = ('url', 'id', 'name', 'project_id', 'mode', 'owner', 'assignee', 'owner_id', 'assignee_id',
             'bug_tracker', 'created_date', 'updated_date', 'deleted_date', 'overlap',
-            'segment_size', 'status', 'labels', 'segments',
+            'segment_size', 'status', 'labels', 'segments','is_deleted',
             'data_chunk_size', 'data_compressed_chunk_type', 'data_original_chunk_type', 'size', 'image_quality', 'data')
         read_only_fields = ('mode', 'created_date', 'updated_date', 'deleted_date', 'status', 'data_chunk_size', 'owner', 'assignee',
             'data_compressed_chunk_type', 'data_original_chunk_type', 'size', 'image_quality', 'data')
@@ -383,6 +384,7 @@ class TaskSerializer(WriteOnceMixin, serializers.ModelSerializer):
         instance.assignee_id = validated_data.get('assignee_id', instance.assignee_id)
         instance.bug_tracker = validated_data.get('bug_tracker',
             instance.bug_tracker)
+        instance.is_deleted = validated_data.get('is_deleted', instance.is_deleted)
         labels = validated_data.get('label_set', [])
         for label in labels:
             LabelSerializer.update_instance(label, instance)
