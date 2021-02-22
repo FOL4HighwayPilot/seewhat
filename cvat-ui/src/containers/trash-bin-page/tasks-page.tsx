@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { Task, TasksQuery, CombinedState } from 'reducers/interfaces';
 
-import TasksPageComponent from 'components/trash-bin-page/trash-bin-page';
+import TrashBinPageComponent from 'components/trash-bin-page/trash-bin-page';
 
 import { getTasksAsync, hideEmptyTasks } from 'actions/tasks-actions';
 
@@ -48,4 +48,4 @@ function mapDispatchToProps(dispatch: any): DispatchToProps {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TasksPageComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(TrashBinPageComponent);

@@ -73,7 +73,7 @@ function updateQuery(previousQuery: TasksQuery, searchString: string): TasksQuer
     return query;
 }
 
-class TasksPageComponent extends React.PureComponent<TasksPageProps & RouteComponentProps> {
+class TrashBinPageComponent extends React.PureComponent<TasksPageProps & RouteComponentProps> {
     public componentDidMount(): void {
         const { gettingQuery, location, onGetTasks } = this.props;
         const query = updateQuery(gettingQuery, location.search);
@@ -206,4 +206,4 @@ class TasksPageComponent extends React.PureComponent<TasksPageProps & RouteCompo
     }
 }
 
-export default withRouter(TasksPageComponent);
+export default withRouter(TrashBinPageComponent);
