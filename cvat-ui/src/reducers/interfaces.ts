@@ -63,6 +63,7 @@ export interface TasksQuery {
 }
 
 export interface Task {
+    isDeleted: boolean;
     instance: any; // cvat-core instance
     preview: string;
 }

@@ -960,6 +960,7 @@
                 owner: null,
                 assignee: null,
                 created_date: undefined,
+                deleted_date: undefined,
                 updated_date: undefined,
                 bug_tracker: undefined,
                 overlap: undefined,
@@ -974,6 +975,7 @@
                 use_zip_chunks: undefined,
                 use_cache: undefined,
                 copy_data: undefined,
+                is_deleted: false,
             };
 
             let updatedFields = {
@@ -1145,6 +1147,15 @@
                      */
                     deletedDate: {
                         get: () => data.deleted_date,
+                    },
+                    /**
+                     * @name isDeleted
+                     * @type {boolean}
+                     * @memberof module:API.cvat.classes.Task
+                     * @instance
+                     */
+                    isDeleted: {
+                        get: () => data.is_deleted,
                     },
                     /**
                      * @name updatedDate

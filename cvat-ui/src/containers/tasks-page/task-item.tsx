@@ -14,6 +14,7 @@ import { cancelInferenceAsync } from 'actions/models-actions';
 interface StateToProps {
     deleted: boolean;
     hidden: boolean;
+    isDeleted: boolean;
     previewImage: string;
     taskInstance: any;
     activeInference: ActiveInference | null;
@@ -37,6 +38,7 @@ function mapStateToProps(state: CombinedState, own: OwnProps): StateToProps {
     return {
         hidden: state.tasks.hideEmpty && task.instance.jobs.length === 0,
         deleted: id in deletes ? deletes[id] === true : false,
+        isDeleted: task.isDeleted,
         previewImage: task.preview,
         taskInstance: task.instance,
         activeInference: state.models.inferences[id] || null,

@@ -8,7 +8,7 @@ import { TasksQuery, CombinedState, ActiveInference } from 'reducers/interfaces'
 
 import TaskItemComponent from 'components/trash-bin-page/task-item';
 
-import { getTasksAsync, deleteTaskAsync } from 'actions/tasks-actions';
+import { getTasksAsync, deleteTaskAsync,updateTaskAsync } from 'actions/tasks-actions';
 import { cancelInferenceAsync } from 'actions/models-actions';
 
 interface StateToProps {
@@ -17,12 +17,15 @@ interface StateToProps {
     previewImage: string;
     taskInstance: any;
     activeInference: ActiveInference | null;
+    isDeleted: boolean;
 }
 
 interface DispatchToProps {
     getTasks(query: TasksQuery): void;
     cancelAutoAnnotation(): void;
     deleteTask: (taskInstance: any) => void;
+    onTaskUpdate: (taskInstance: any) => void;
+
 }
 
 interface OwnProps {
@@ -42,6 +45,7 @@ function mapStateToProps(state: CombinedState, own: OwnProps): StateToProps {
         previewImage: task.preview,
         taskInstance: task.instance,
         activeInference: state.models.inferences[id] || null,
+        isDeleted: task.isDeleted,
     };
 }
 
@@ -55,6 +59,9 @@ function mapDispatchToProps(dispatch: any, own: OwnProps): DispatchToProps {
         },
         deleteTask: (taskInstance: any): void => {
             dispatch(deleteTaskAsync(taskInstance));
+        },
+        onTaskUpdate: (taskInstance: any): void => {
+            dispatch(updateTaskAsync(taskInstance));
         },
     };
 }

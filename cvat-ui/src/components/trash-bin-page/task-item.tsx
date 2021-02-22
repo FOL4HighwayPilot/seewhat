@@ -15,9 +15,11 @@ import Modal from 'antd/lib/modal';
 export interface TaskItemProps {
     taskInstance: any;
     previewImage: string;
+    isDeleted: boolean;
     deleted: boolean;
     hidden: boolean;
     deleteTask: (taskInstance: any) => void;
+    onTaskUpdate: (taskInstance: any) => void;
 }
 
 class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteComponentProps> {
@@ -128,7 +130,7 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
     }
 
     private renderNavigation(): JSX.Element {
-        const { taskInstance, history, deleteTask } = this.props;
+        const { taskInstance, history, deleteTask, onTaskUpdate } = this.props;
         const { id } = taskInstance;
 
         return (
@@ -166,10 +168,10 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
                             type='primary'
                             size='default'
                             ghost
-                            href={`/tasks/${id}`}
+                            //href={`/tasks/${id}`}
                             onClick={(e: React.MouseEvent): void => {
-                                e.preventDefault();
-                                history.push(`/tasks/${id}`);
+                                taskInstance.isDeleted = false;
+                                onTaskUpdate(taskInstance);
                             }}
                         >
                             Restore
@@ -181,7 +183,7 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
     }
 
     public render(): JSX.Element {
-        const { deleted, hidden } = this.props;
+        const { deleted, hidden, isDeleted } = this.props;
         const style = {};
         if (deleted) {
             (style as any).pointerEvents = 'none';
@@ -189,6 +191,10 @@ class TaskItemComponent extends React.PureComponent<TaskItemProps & RouteCompone
         }
 
         if (hidden) {
+            (style as any).display = 'none';
+        }
+
+        if (isDeleted === false) {
             (style as any).display = 'none';
         }
 

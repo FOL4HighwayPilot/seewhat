@@ -329,6 +329,7 @@ function build() {
             /**
              * @typedef {Object} TaskFilter
              * @property {string} name Check if name contains this value
+             * {boolean} is_deleted Check if name contains this value
              * @property {module:API.cvat.enums.TaskStatus} status
              * Check if status contains this value
              * @property {module:API.cvat.enums.TaskMode} mode
